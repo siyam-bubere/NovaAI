@@ -1,0 +1,186 @@
+/* Base Viewport Container */
+.chatWindow {
+    flex-grow: 1;
+    height: 100vh;
+    background-color: #212121;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Top Navigation Bar */
+.navbar {
+    height: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    background-color: #212121;
+}
+
+.navbar span {
+    font-size: 18px;
+    font-weight: 600;
+    color: #b4b4b4;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+}
+
+.navbar span:hover {
+    color: #fff;
+}
+
+/* Right Side User Profile circle */
+.userIconDiv {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #2f2f2f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.userIconDiv i {
+    font-size: 14px;
+    color: #ececec;
+}
+
+/* Dynamic Middle Container (The core layout anchor) */
+.chatContentBody {
+    flex-grow: 1;        /* Forces middle box to swell up, pinning input to bottom */
+    overflow-y: auto;    /* Makes only the message history block scrollable */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ChatGPT Centered Welcome Text Layout */
+.welcomeContainer {
+    margin: auto;        /* Perfectly centers text vertically and horizontally */
+    text-align: center;
+    padding: 20px;
+}
+
+.welcomeContainer h1 {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 40px;     /* Large clean text profile */
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.5px;
+}
+
+/* Bottom Controls Section Container */
+.chatInput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px 24px 20px;
+    background-color: #212121;
+    width: 100%;
+}
+
+/* Prompt Bar Wrapper */
+.userInput {
+    width: 100%;
+    max-width: 768px; 
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Input text area fields */
+.userInput input {
+    width: 100%;
+    background-color: #2f2f2f;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 16px 52px 16px 24px;
+    border-radius: 28px; 
+    font-size: 16px;
+    font-family: inherit;
+}
+
+.userInput input::placeholder {
+    color: #b4b4b4;
+}
+
+/* Send Prompt Arrow button icon - Structural Setup */
+#submit {
+    position: absolute;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#submit i {
+    font-size: 14px;
+}
+
+/* Dynamic State Classes */
+.submit-active {
+    background-color: #ffffff;  /* Clear white when active */
+}
+
+.submit-active i {
+    color: #212121;            /* Dark arrow color for sharp contrast on white background */
+}
+
+.submit-active:hover {
+    background-color: #e5e5e5;  /* Soft visual feedback on hover */
+}
+
+.submit-disabled {
+    background-color: #676767;  /* Default grey look when streaming/disabled */
+    cursor: not-allowed;
+}
+
+.submit-disabled i {
+    color: #171717;            /* Muted arrow inside the container */
+}
+
+/* Tiny Disclaimer Text Footer row */
+.info {
+    font-size: 12px !important;
+    color: #8e8e8e !important;
+    margin-top: 12px;
+    text-align: center;
+    letter-spacing: 0.2px;
+}
+
+/* 1. Create the spinning animation loop */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 2. Apply the animation to your class */
+.animate-spin {
+  animation: spin 1s linear infinite;
+  display: inline-block; /* Ensures the rotation anchors cleanly on the center */
+}
+
+/* 3. Optional: Stylize your disabled submit button to look greyed out */
+.submit-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.submit-active {
+  cursor: pointer;
+}

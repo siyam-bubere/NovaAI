@@ -1,0 +1,17 @@
+.typewriter-container {
+    color: #6366f1; /* An accent color, e.g., indigo/purple */
+    font-weight: 600;
+}
+
+.typewriter-cursor {
+    margin-left: 2px;
+    font-weight: 400;
+    color: #ffffff;
+    animation: blink 0.8s infinite;
+}
+
+/* Blinking terminal cursor effect */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}

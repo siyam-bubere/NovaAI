@@ -1,0 +1,197 @@
+/* ==========================================
+   Chat.css - Dynamic Viewport Display Styles
+   ========================================== */
+
+/* Main layout wrapper inside .chatContentBody */
+.chatWrapper {
+    width: 100%;
+    max-width: 768px; /* Standard conversational line break constraint */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* 1. Fresh Thread Welcome Screen Layout */
+.welcomeContainer {
+    margin: auto; /* Centers the component perfectly vertically and horizontally */
+    text-align: center;
+    padding: 40px 20px;
+    animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.welcomeContainer h1 {
+    font-size: 38px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+}
+
+.welcomeContainer .subtitle {
+    font-size: 16px;
+    color: #b4b4b4;
+    font-weight: 400;
+}
+
+/* 2. Chat Feed History Area Timeline */
+.chats {
+    display: flex;
+    flex-direction: column;
+    gap: 32px; /* Generous breathing room between back-and-forth messages */
+    padding: 24px 20px;
+    width: 100%;
+}
+
+/* Standard Flex Containers for Row Isolation */
+.userDiv, 
+.geminiDiv {
+    display: flex;
+    width: 100%;
+    line-height: 1.85; /* Increased line height for overall layout breathing room */
+    font-size: 16px;
+}
+
+/* User Prompt Layout Alignment (Right Aligned) */
+.userDiv {
+    justify-content: flex-end;
+}
+
+/* User Chat Bubble Shape and Theme */
+.userMessage {
+    background-color: #2f2f2f; /* Contrasting lighter dark grey */
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 24px;
+    max-width: 75%; /* Prevents text from stretching completely edge-to-edge */
+    word-break: break-word;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: left; /* Ensures user's text inside their bubble stays left-aligned */
+}
+
+/* AI Engine Response Layout Alignment (Left Aligned) */
+.geminiDiv {
+    justify-content: flex-start;
+    flex-direction: column; /* Force markdown blocks to stack cleanly down */
+    min-width: 0;           /* CRITICAL: Overrides flexbox implicit size blowouts */
+    text-align: left;       /* Force all child markdown elements to default to left-align */
+}
+
+/* Gemini Standard Text Treatment (Clean markdown profile layout) */
+.geminiMessage {
+    color: #ececec;
+    width: 100%;
+    max-width: 100%;
+    padding: 8px 0;
+    text-align: left;       /* Extra alignment safety guard */
+}
+
+/* ==========================================
+   Markdown Elements & Code Formatting Rules
+   ========================================== */
+
+/* Prevent standard markdown text blocks from breaking boundaries and force left-alignment */
+.geminiDiv p, 
+.geminiDiv ul, 
+.geminiDiv ol, 
+.geminiDiv table,
+.geminiDiv h1,
+.geminiDiv h2,
+.geminiDiv h3,
+.geminiDiv h4 {
+    width: 100%;
+    max-width: 100%;
+    word-break: break-word;
+    margin-bottom: 20px;    /* Slightly increased margin-bottom for paragraph separation */
+    text-align: left;       /* Explicitly overrides any global text-centering layout inherits */
+    line-height: 1.85;      /* Generous line spacing for clear response readability */
+}
+
+.geminiDiv li {
+    margin-left: 20px;
+    margin-bottom: 8px;     /* Increased padding between bullet points */
+    text-align: left;       /* Keeps bullet points left aligned */
+    line-height: 1.85;      /* Matches the paragraph spacing */
+}
+
+/* Code container adjustments to prevent horizontal layout breakages */
+.geminiDiv pre {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;       /* Traps horizontal scrolling safely inside the block */
+    border-radius: 8px;
+    margin: 20px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: left;       /* Ensures code blocks aren't centered internally */
+}
+
+.geminiDiv code {
+    white-space: pre;       /* Preserves tabs/spacing of code strings natively */
+    font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', monospace;
+    font-size: 14px;
+    line-height: 1.5;       /* Code lines stay closer together so structures look cohesive */
+}
+
+/* Inline code tags (e.g., `code`) styling */
+:not(pre) > code {
+    background-color: #272727;
+    color: #e06c75;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: normal;
+}
+
+/* KaTeX Formula Display Overrides (Ensures full equations are block centered, text remains left) */
+.geminiDiv .katex-display {
+    text-align: center;     /* Centers standard standalone multi-line equations beautifully */
+    margin: 16px 0;
+}
+
+/* Live Streaming Generation Loader Anchor block */
+.assistantLoadingBubble {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 4px 0;
+    width: 100%;
+}
+
+/* Smooth Entrance Micro-animation for Welcome Layout */
+@keyframes fadeInUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(8px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* Center and align the intro content nicely inside your wrapper */
+.welcomeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 20px;
+    height: 100%;
+}
+
+.welcomeContainer h1 {
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+/* Style formatting for your secondary looping animation string */
+.welcomeSubtext {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #8e8ea0; /* Subdued gray text colors */
+    margin: 0;
+}

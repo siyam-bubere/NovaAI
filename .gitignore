@@ -1,0 +1,14 @@
+# Ignore dependency folders anywhere in the project
+**/node_modules/
+
+# Ignore environment variable files anywhere in the project
+**.env
+**.env.local
+
+# Ignore frontend build outputs
+Frontend/dist/
+Frontend/build/
+
+# Ignore OS system files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,36 @@
+/* Add this snippet directly to the top of your App.css */
+#root {
+  width: 100vw !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important; /* Overrides any template flex-centering */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #212121;
+  color: #ececec;
+  font-family: 'Roboto', 'Open Sans', 'Helvetica Neue', sans-serif;
+  overflow: hidden;
+}
+
+.main {
+  background-color: #212121;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}

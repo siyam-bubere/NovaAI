@@ -1,0 +1,347 @@
+/* Sidebar Layout Container */
+.sidebar {
+    background-color: #171717 !important; 
+    color: #ececec !important;             
+    height: 100vh;
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Branding Header */
+.brand-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 8px;
+    margin-bottom: 12px;
+}
+
+.logo {
+    height: 32px !important;
+    width: 32px !important;
+    object-fit: cover;
+}
+
+.close-btn {
+    background: none !important;
+    border: none !important;
+    font-size: 18px;
+    color: #8e8e8e !important;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.close-btn:hover {
+    color: #fff !important;
+}
+
+/* "New Chat" Button styling */
+.new-chat-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background-color: #212121 !important; 
+    border: none !important;
+    cursor: pointer;
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+/* Specific Targets for text inside elements */
+.btn-text, .link-text, .history-text {
+    color: #ececec !important; 
+    font-size: 14px !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-weight: 400 !important;
+}
+
+.btn-text {
+    font-weight: 500 !important;
+    color: #fff !important;
+}
+
+.btn-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Navigation Link rows */
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 16px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.nav-item i, .new-chat-btn i {
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+    color: #ececec !important; 
+}
+
+.nav-item:hover, .new-chat-btn:hover {
+    background-color: #212121 !important; 
+}
+
+/* Chat History Section */
+.history-section {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden; 
+}
+
+.section-title {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #8e8e8e !important; 
+    margin: 8px 12px;
+    text-align: left !important; 
+}
+
+.history {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow-y: auto; 
+    overflow-x: visible !important; /* Allow menu expansion horizontally */
+    flex-grow: 1;
+    text-align: left !important; 
+}
+
+/* Base list item row configuration */
+.history-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 4px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    z-index: 1;
+    overflow: visible !important; /* CRUCIAL: Breaks out of the overflow container */
+}
+
+.history-item:hover {
+    background-color: #212121 !important;
+}
+
+/* Boost active z-index so dropdown layers on top of subsequent titles */
+.history-item.active-menu {
+    z-index: 99 !important;
+    background-color: #212121 !important;
+}
+
+/* Truncation and layout shifts exclusively here now */
+.history-text {
+    flex: 1;
+    padding: 9px 40px 9px 12px; /* Right padding preserves interactive space for 3 dots */
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    display: block;
+}
+
+/* Custom Webkit History Scrollbar styling */
+.history::-webkit-scrollbar {
+    width: 6px;
+}
+
+.history::-webkit-scrollbar-track {
+    background: transparent; 
+}
+
+.history::-webkit-scrollbar-thumb {
+    background: #2d2d2d; 
+    border-radius: 10px;
+}
+
+.history::-webkit-scrollbar-thumb:hover {
+    background: #424242; 
+}
+
+/* User Profile Card Footer */
+.sidebar-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 4px 4px 4px;
+    border-top: 1px solid #2d2d2d !important; 
+    margin-top: 8px;
+}
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left !important;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #40414f !important; 
+    color: #fff !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #fff !important;
+}
+
+.tier {
+    font-size: 12px !important;
+    color: #8e8e8e !important;
+}
+
+.upgrade-btn {
+    background-color: transparent !important;
+    border: 1px solid #4d4d4d !important;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: #fff !important;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.upgrade-btn:hover {
+    background-color: #212121 !important;
+}
+
+/* 3-Dot Container positioning layout */
+.thread-menu-container {
+    position: absolute;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    z-index: 5;
+}
+
+/* Hide the 3-dot button by default */
+.thread-menu-btn {
+    opacity: 0;
+    visibility: hidden;
+    background: none;
+    border: none;
+    color: #8e8e8e;
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: opacity 0.2s ease, visibility 0.2s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.thread-menu-btn:hover {
+    background-color: #2d2d2d;
+    color: #fff;
+}
+
+/* Reveal button when row is hovered or dropdown is open */
+.history-item:hover .thread-menu-btn,
+.history-item.active-menu .thread-menu-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Fixed Overlay Dropdown styling */
+.thread-dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 4px); 
+    background-color: #202123; 
+    border: 1px solid #3c3c3c;
+    border-radius: 6px;
+    z-index: 9999 !important; 
+    display: flex;
+    flex-direction: column;
+    min-width: 125px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+/* Individual dropdown buttons */
+.dropdown-item {
+    background: none;
+    border: none;
+    color: #ececf1;
+    padding: 8px 14px;
+    text-align: left;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.dropdown-item:hover {
+    background-color: #2d2d2d;
+}
+
+.dropdown-item.delete-btn:hover {
+    background-color: #b91c1c;
+    color: white;
+}
+
+/* Ensure the logo has a smooth basis and pointer cursor */
+.logo {
+    cursor: pointer;
+    display: inline-block; /* Required for transform modifications to work properly */
+    transition: transform 0.1s ease;
+}
+
+/* The animation class applied via React state */
+.logo.spin-once {
+    /* 1s duration, ease-in-out provides the slow-fast-slow acceleration curve */
+    animation: spinCircle 1s ease-in-out; 
+}
+
+/* Keyframe definition for a single 360-degree rotation */
+@keyframes spinCircle {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
