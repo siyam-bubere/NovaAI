@@ -12,11 +12,11 @@
 
 /* Header */
 .landing-header {
-    height: 70px;
+    min-height: 84px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 5%;
+    padding: 16px 5%;
     border-bottom: 1px solid var(--border-color);
     background-color: var(--navbar-bg);
     z-index: 10;
@@ -45,7 +45,7 @@
 .landing-header-actions {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 24px;
 }
 
 .theme-toggle-btn {
