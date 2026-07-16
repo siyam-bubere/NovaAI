@@ -5,7 +5,7 @@
 /* Main layout wrapper inside .chatContentBody */
 .chatWrapper {
     width: 100%;
-    max-width: 768px; /* Standard conversational line break constraint */
+    max-width: 768px; 
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -14,23 +14,28 @@
 
 /* 1. Fresh Thread Welcome Screen Layout */
 .welcomeContainer {
-    margin: auto; /* Centers the component perfectly vertically and horizontally */
+    margin: auto; 
     text-align: center;
     padding: 40px 20px;
     animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 .welcomeContainer h1 {
     font-size: 38px;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--text-h);
     letter-spacing: -0.5px;
     margin-bottom: 12px;
 }
 
 .welcomeContainer .subtitle {
     font-size: 16px;
-    color: #b4b4b4;
+    color: var(--sidebar-subtext);
     font-weight: 400;
 }
 
@@ -38,7 +43,7 @@
 .chats {
     display: flex;
     flex-direction: column;
-    gap: 32px; /* Generous breathing room between back-and-forth messages */
+    gap: 32px; 
     padding: 24px 20px;
     width: 100%;
 }
@@ -48,7 +53,7 @@
 .geminiDiv {
     display: flex;
     width: 100%;
-    line-height: 1.85; /* Increased line height for overall layout breathing room */
+    line-height: 1.85; 
     font-size: 16px;
 }
 
@@ -59,38 +64,37 @@
 
 /* User Chat Bubble Shape and Theme */
 .userMessage {
-    background-color: #2f2f2f; /* Contrasting lighter dark grey */
-    color: #ffffff;
+    background-color: var(--msg-user-bg); 
+    color: var(--input-text);
     padding: 12px 20px;
     border-radius: 24px;
-    max-width: 75%; /* Prevents text from stretching completely edge-to-edge */
+    max-width: 75%; 
     word-break: break-word;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: left; /* Ensures user's text inside their bubble stays left-aligned */
+    box-shadow: var(--shadow);
+    text-align: left; 
 }
 
 /* AI Engine Response Layout Alignment (Left Aligned) */
 .geminiDiv {
     justify-content: flex-start;
-    flex-direction: column; /* Force markdown blocks to stack cleanly down */
-    min-width: 0;           /* CRITICAL: Overrides flexbox implicit size blowouts */
-    text-align: left;       /* Force all child markdown elements to default to left-align */
+    flex-direction: column; 
+    min-width: 0;           
+    text-align: left;       
 }
 
-/* Gemini Standard Text Treatment (Clean markdown profile layout) */
+/* Gemini Standard Text Treatment */
 .geminiMessage {
-    color: #ececec;
+    color: var(--text);
     width: 100%;
     max-width: 100%;
     padding: 8px 0;
-    text-align: left;       /* Extra alignment safety guard */
+    text-align: left;       
 }
 
 /* ==========================================
    Markdown Elements & Code Formatting Rules
    ========================================== */
 
-/* Prevent standard markdown text blocks from breaking boundaries and force left-alignment */
 .geminiDiv p, 
 .geminiDiv ul, 
 .geminiDiv ol, 
@@ -102,48 +106,52 @@
     width: 100%;
     max-width: 100%;
     word-break: break-word;
-    margin-bottom: 20px;    /* Slightly increased margin-bottom for paragraph separation */
-    text-align: left;       /* Explicitly overrides any global text-centering layout inherits */
-    line-height: 1.85;      /* Generous line spacing for clear response readability */
+    margin-bottom: 20px;    
+    text-align: left;       
+    line-height: 1.85;      
 }
 
 .geminiDiv li {
     margin-left: 20px;
-    margin-bottom: 8px;     /* Increased padding between bullet points */
-    text-align: left;       /* Keeps bullet points left aligned */
-    line-height: 1.85;      /* Matches the paragraph spacing */
+    margin-bottom: 8px;     
+    text-align: left;       
+    line-height: 1.85;      
 }
 
 /* Code container adjustments to prevent horizontal layout breakages */
 .geminiDiv pre {
     width: 100%;
     max-width: 100%;
-    overflow-x: auto;       /* Traps horizontal scrolling safely inside the block */
+    overflow-x: auto;       
     border-radius: 8px;
     margin: 20px 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    text-align: left;       /* Ensures code blocks aren't centered internally */
+    box-shadow: var(--shadow);
+    text-align: left;       
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
 }
 
 .geminiDiv code {
-    white-space: pre;       /* Preserves tabs/spacing of code strings natively */
-    font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', monospace;
+    white-space: pre;       
+    font-family: ui-monospace, Consolas, monospace;
     font-size: 14px;
-    line-height: 1.5;       /* Code lines stay closer together so structures look cohesive */
+    line-height: 1.5;       
+    color: var(--input-text);
 }
 
 /* Inline code tags (e.g., `code`) styling */
 :not(pre) > code {
-    background-color: #272727;
-    color: #e06c75;
+    background-color: var(--input-bg);
+    color: var(--accent);
     padding: 2px 6px;
     border-radius: 4px;
     white-space: normal;
+    border: 1px solid var(--border-color);
 }
 
-/* KaTeX Formula Display Overrides (Ensures full equations are block centered, text remains left) */
+/* KaTeX Formula Display Overrides */
 .geminiDiv .katex-display {
-    text-align: center;     /* Centers standard standalone multi-line equations beautifully */
+    text-align: center;     
     margin: 16px 0;
 }
 
@@ -168,30 +176,35 @@
     }
 }
 
-/* Center and align the intro content nicely inside your wrapper */
-.welcomeContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin-top: auto;
-    margin-bottom: auto;
-    padding: 20px;
-    height: 100%;
-}
-
-.welcomeContainer h1 {
-    font-size: 2.4rem;
-    font-weight: 600;
-    color: #ffffff;
-    margin-bottom: 8px;
-}
-
-/* Style formatting for your secondary looping animation string */
 .welcomeSubtext {
     font-size: 1.5rem;
     font-weight: 400;
-    color: #8e8ea0; /* Subdued gray text colors */
+    color: var(--sidebar-subtext); 
     margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .chats {
+        padding: 16px 12px;
+        gap: 20px;
+    }
+
+    .userMessage {
+        max-width: 85%;
+        padding: 10px 16px;
+        font-size: 15px;
+    }
+
+    .geminiDiv {
+        font-size: 15px;
+    }
+
+    .welcomeContainer h1 {
+        font-size: 28px;
+    }
+
+    .welcomeSubtext {
+        font-size: 1.2rem;
+    }
 }

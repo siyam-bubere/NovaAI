@@ -1,32 +1,44 @@
 import "./Sidebar.css";
-// Add useState to your imports if it's not there
 import { useContext, useEffect, useState } from 'react'; 
 import { MyContext } from "./MyContext";
 import { v1 as uuidv1 } from 'uuid';
 
-function Sidebar() {
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
 
-    const {allThreads, setAllThreads, currThreadId, setNewChat, setPrompt, setReply, setCurrThreadId, setPrevChats, prevChats} = useContext(MyContext);
-    // Inside your Sidebar component:
+function Sidebar() {
+    const {
+        allThreads, setAllThreads, 
+        currThreadId, setNewChat, 
+        setPrompt, setReply, 
+        setCurrThreadId, setPrevChats, 
+        prevChats, token, 
+        user, theme, 
+        handleToggleTheme, logout,
+        setMobileSidebarOpen
+    } = useContext(MyContext);
+    
     const [openMenuId, setOpenMenuId] = useState(null);
+    const [isSpinning, setIsSpinning] = useState(false);
     
     const getAllThreads = async () => {
-
+        if (!token) return;
         try {
-            const response = await fetch("http://localhost:8080/api/thread");
+            const response = await fetch(`${BACKEND_URL}/api/thread`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
             const res = await response.json();
-            // console.log(res);
-            const filteredData =  res.map(thread => ({threadId: thread.threadId, title:  thread.title}));
-            // console.log(filteredData);
-            setAllThreads(filteredData);
+            if (response.ok && Array.isArray(res)) {
+                const filteredData = res.map(thread => ({ threadId: thread.threadId, title: thread.title }));
+                setAllThreads(filteredData);
+            }
         } catch(err) {
-            console.log(err);
+            console.log("Error fetching threads:", err);
         }
     };
 
     useEffect(() => {
         getAllThreads();
-    }, [currThreadId, prevChats]);
+    }, [currThreadId, prevChats, token]);
 
     // Close dropdown when clicking anywhere outside
     useEffect(() => {
@@ -36,21 +48,24 @@ function Sidebar() {
     }, []);
 
     const createNewChat = () => {
-        console.log("called")
         setNewChat(true);
         setPrompt("");
         setReply(null);
         setCurrThreadId(uuidv1());
         setPrevChats([]);
+        setMobileSidebarOpen(false); // Close drawer on mobile upon starting chat
     };
 
     const changeThread = async (newThreadId) => {
         if (!newThreadId || typeof newThreadId === 'object') return; // Safety check
 
         setCurrThreadId(newThreadId);
+        setMobileSidebarOpen(false); // Close drawer on mobile when switching chats
 
         try {
-            const response = await fetch(`http://localhost:8080/api/thread/${newThreadId}`);
+            const response = await fetch(`${BACKEND_URL}/api/thread/${newThreadId}`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
             const res = await response.json();
             
             if (!response.ok) {
@@ -58,7 +73,6 @@ function Sidebar() {
                 return;
             }
 
-            // Ensure we received an array before setting state
             setPrevChats(Array.isArray(res) ? res : []);
             setNewChat(false);
         } catch(err) {
@@ -67,10 +81,12 @@ function Sidebar() {
     };
 
     const deleteThread = async (threadId) => {
-
         try {
-            const response = fetch(`http://localhost:8080/api/thread/${threadId}`, {method: "DELETE"});
-            const data = (await response).json();
+            const response = await fetch(`${BACKEND_URL}/api/thread/${threadId}`, {
+                method: "DELETE",
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            const data = await response.json();
 
             setAllThreads(prev => prev.filter(thread => thread.threadId !== threadId));
 
@@ -78,35 +94,38 @@ function Sidebar() {
                 createNewChat();
             }
         } catch(err) {
-            console.log(err);
-        }
-    }
-
-    const [isSpinning, setIsSpinning] = useState(false);
-
-    const handleLogoTouch = () => {
-        // Prevent overlapping animations if clicked multiple times rapidly
-        if (!isSpinning) {
-            setIsSpinning(true);
+            console.log("Delete error:", err);
         }
     };
 
+    // User initials generator
+    const getInitials = () => {
+        if (!user || !user.name) return "SI";
+        const parts = user.name.trim().split(" ");
+        if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    };
 
     return (
         <section className="sidebar">
             {/* Top Branding & Main Action */}
             <div className="sidebar-top">
                 <div className="brand-header">
-                    <img 
-                        src="src/assets/logow.png" 
-                        alt="NovaAI Logo" 
-                        className={`logo ${isSpinning ? 'spin-once' : ''}`} 
-                        onMouseEnter={() => {
-                            if (!isSpinning) setIsSpinning(true);
-                        }}
-                        onAnimationEnd={() => setIsSpinning(false)} // Resets so it can spin on the next hover
-                    />
-                    <button className="close-btn"><i className="fa-solid fa-xmark"></i></button>
+                    <div className="logo-brand-wrap" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <img 
+                            src="src/assets/logow.png" 
+                            alt="NovaAI Logo" 
+                            className={`logo ${isSpinning ? 'spin-once' : ''}`} 
+                            onMouseEnter={() => {
+                                if (!isSpinning) setIsSpinning(true);
+                            }}
+                            onAnimationEnd={() => setIsSpinning(false)}
+                        />
+                        <span className="brand-geist-pixel" style={{ fontSize: '18px', fontWeight: 'bold' }}>Nova AI</span>
+                    </div>
+                    <button className="close-btn" onClick={() => setMobileSidebarOpen(false)}>
+                        <i className="fa-solid fa-xmark"></i>
+                    </button>
                 </div>
                 
                 <button className="new-chat-btn" onClick={createNewChat}>
@@ -145,7 +164,7 @@ function Sidebar() {
                                     <button 
                                         className="thread-menu-btn" 
                                         onClick={(e) => {
-                                            e.stopPropagation(); // Prevents switching the thread
+                                            e.stopPropagation(); 
                                             setOpenMenuId(openMenuId === thread.threadId ? null : thread.threadId);
                                         }}
                                     >
@@ -158,9 +177,8 @@ function Sidebar() {
                                             <button 
                                                 className="dropdown-item"
                                                 onClick={() => {
-                                                    console.log("Rename thread:", thread.threadId);
                                                     setOpenMenuId(null);
-                                                    // TODO: Add rename modal or prompt logic here
+                                                    // Optional: Rename logic
                                                 }}
                                             >
                                                 <i className="fa-solid fa-pen"></i> Rename
@@ -168,10 +186,8 @@ function Sidebar() {
                                             <button 
                                                 className="dropdown-item delete-btn"
                                                 onClick={() => {
-                                                    console.log("Delete thread:", thread.threadId);
                                                     setOpenMenuId(null);
                                                     deleteThread(thread.threadId);
-                                                    // TODO: Add backend delete fetch request here
                                                 }}
                                             >
                                                 <i className="fa-solid fa-trash"></i> Delete
@@ -188,13 +204,29 @@ function Sidebar() {
             {/* User Profile Card Footer */}
             <div className="sidebar-footer">
                 <div className="profile-card">
-                    <div className="avatar">SI</div>
+                    <div className="avatar">{getInitials()}</div>
                     <div className="profile-info">
-                        <span className="username">Siyambubere</span>
-                        <span className="tier">Free</span>
+                        <span className="username" title={user?.name || "User"}>{user?.name || "User"}</span>
+                        <span className="tier">{user?.isUnlimited ? "Unlimited" : "Free"}</span>
                     </div>
                 </div>
-                <button className="upgrade-btn">Upgrade</button>
+                
+                <div className="footer-actions">
+                    <button 
+                        className="footer-icon-btn" 
+                        onClick={handleToggleTheme} 
+                        title={`Switch to ${theme === "dark" ? "Light" : "Dark"} Mode`}
+                    >
+                        {theme === "dark" ? <i className="fa-solid fa-sun"></i> : <i className="fa-solid fa-moon"></i>}
+                    </button>
+                    <button 
+                        className="footer-icon-btn logout-btn" 
+                        onClick={logout} 
+                        title="Log Out"
+                    >
+                        <i className="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </div>
             </div>
         </section>
     );

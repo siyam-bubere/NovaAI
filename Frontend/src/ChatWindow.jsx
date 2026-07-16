@@ -4,37 +4,47 @@ import Chat from "./Chat.jsx";
 import { MyContext } from "./MyContext.jsx";
 import { useContext } from "react";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
+
 function ChatWindow() {
-    const { prompt, setPrompt, setReply, currThreadId, setNewChat, setPrevChats, isTyping } = useContext(MyContext); // ← pull isTyping
+    const { 
+        prompt, setPrompt, 
+        setReply, currThreadId, 
+        setNewChat, setPrevChats, 
+        isTyping, token, 
+        user, setMobileSidebarOpen 
+    } = useContext(MyContext);
+    
     const [loading, setLoading] = useState(false);
 
     const getREply = async () => {
         const userMessageContent = prompt.trim();
-        if (!userMessageContent || loading || isTyping) return; // ← guard
+        if (!userMessageContent || loading || isTyping) return;
 
         setLoading(true);
         setNewChat(false);
         setPrevChats(prev => [...prev, { role: "user", content: userMessageContent }]);
         setPrompt("");
 
-        console.log("sending message: ", userMessageContent, " Thread Id : ", currThreadId);
-
         const options = {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
             body: JSON.stringify({ message: userMessageContent, threadId: currThreadId })
         };
 
         try {
-            const response = await fetch("http://localhost:8080/api/chat", options);
+            const response = await fetch(`${BACKEND_URL}/api/chat`, options);
             const data = await response.json();
-            console.log("Backend response data:", data);
 
-            if (data.reply) {
+            if (response.ok && data.reply) {
                 setReply(data.reply);
-            } else if (data.error) {
-                console.error("Backend Error:", data.error);
-                setPrevChats(prev => [...prev, { role: "assistant", content: "Error: " + data.error }]);
+            } else {
+                const errorText = data.error || "Failed to generate response.";
+                console.error("Backend Error:", errorText);
+                setPrevChats(prev => [...prev, { role: "assistant", content: "Error: " + errorText }]);
             }
 
         } catch (err) {
@@ -49,14 +59,26 @@ function ChatWindow() {
         setPrevChats(prev => [...prev, { role: "assistant", content: text }]);
     };
 
-    const isDisabled = loading || isTyping; // ← single flag for both states
+    const getInitials = () => {
+        if (!user || !user.name) return "U";
+        const parts = user.name.trim().split(" ");
+        if (parts.length === 1) return parts[0].substring(0, 1).toUpperCase();
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    };
+
+    const isDisabled = loading || isTyping;
 
     return (
         <div className="chatWindow">
             <div className="navbar">
-                <span>NovaAI <i className="fa-solid fa-chevron-down"></i></span>
-                <div className="userIconDiv">
-                    <span><i className="fa-solid fa-user"></i></span>
+                <div className="nav-left">
+                    <button className="menu-toggle-btn" onClick={() => setMobileSidebarOpen(true)}>
+                        <i className="fa-solid fa-bars"></i>
+                    </button>
+                    <span className="brand-geist-pixel">Nova AI</span>
+                </div>
+                <div className="userIconDiv" title={user?.name || "User"}>
+                    <span>{getInitials()}</span>
                 </div>
             </div>
 
@@ -72,13 +94,13 @@ function ChatWindow() {
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
                         onKeyDown={(e) => e.key === "Enter" && getREply()}
-                        disabled={isDisabled} // ← use combined flag
+                        disabled={isDisabled}
                     />
                     <div
                         id="submit"
                         onClick={getREply}
-                        className={isDisabled ? "submit-disabled" : "submit-active"} // ← use combined flag
-                        style={{ pointerEvents: isDisabled ? "none" : "auto" }} // ← use combined flag
+                        className={isDisabled ? "submit-disabled" : "submit-active"}
+                        style={{ pointerEvents: isDisabled ? "none" : "auto" }}
                     >
                         {loading || isTyping ? (
                             <i className="fa-solid fa-circle-notch animate-spin"></i>

@@ -1,14 +1,16 @@
 /* Sidebar Layout Container */
 .sidebar {
-    background-color: #171717 !important; 
-    color: #ececec !important;             
+    background-color: var(--sidebar-bg) !important; 
+    color: var(--text) !important;             
     height: 100vh;
     width: 260px;
     display: flex;
     flex-direction: column;
     padding: 12px;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-family: 'Roboto', sans-serif !important;
+    border-right: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Branding Header */
@@ -18,6 +20,10 @@
     align-items: center;
     padding: 4px 8px;
     margin-bottom: 12px;
+}
+
+.logo-brand-wrap {
+    color: var(--text-h);
 }
 
 .logo {
@@ -30,13 +36,14 @@
     background: none !important;
     border: none !important;
     font-size: 18px;
-    color: #8e8e8e !important;
+    color: var(--sidebar-subtext) !important;
     cursor: pointer;
     padding: 4px;
+    display: none; /* Hidden on desktop */
 }
 
 .close-btn:hover {
-    color: #fff !important;
+    color: var(--text-h) !important;
 }
 
 /* "New Chat" Button styling */
@@ -47,24 +54,29 @@
     align-items: center;
     padding: 10px 12px;
     border-radius: 8px;
-    background-color: #212121 !important; 
-    border: none !important;
+    background-color: var(--input-bg) !important; 
+    border: 1px solid var(--border-color) !important;
     cursor: pointer;
     margin-bottom: 16px;
     text-align: left;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.new-chat-btn:hover {
+    background-color: var(--sidebar-item-hover) !important;
 }
 
 /* Specific Targets for text inside elements */
 .btn-text, .link-text, .history-text {
-    color: #ececec !important; 
+    color: var(--text) !important; 
     font-size: 14px !important;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-family: 'Roboto', sans-serif !important;
     font-weight: 400 !important;
 }
 
 .btn-text {
     font-weight: 500 !important;
-    color: #fff !important;
+    color: var(--text-h) !important;
 }
 
 .btn-left {
@@ -91,15 +103,15 @@
     transition: background-color 0.15s ease;
 }
 
+.nav-item:hover {
+    background-color: var(--sidebar-item-hover) !important;
+}
+
 .nav-item i, .new-chat-btn i {
     font-size: 16px;
     width: 20px;
     text-align: center;
-    color: #ececec !important; 
-}
-
-.nav-item:hover, .new-chat-btn:hover {
-    background-color: #212121 !important; 
+    color: var(--text) !important; 
 }
 
 /* Chat History Section */
@@ -113,7 +125,7 @@
 .section-title {
     font-size: 12px !important;
     font-weight: 600 !important;
-    color: #8e8e8e !important; 
+    color: var(--sidebar-subtext) !important; 
     margin: 8px 12px;
     text-align: left !important; 
 }
@@ -123,7 +135,7 @@
     padding: 0 !important;
     margin: 0 !important;
     overflow-y: auto; 
-    overflow-x: visible !important; /* Allow menu expansion horizontally */
+    overflow-x: visible !important;
     flex-grow: 1;
     text-align: left !important; 
 }
@@ -139,31 +151,30 @@
     border-radius: 8px;
     transition: background-color 0.2s ease;
     z-index: 1;
-    overflow: visible !important; /* CRUCIAL: Breaks out of the overflow container */
+    overflow: visible !important; 
 }
 
 .history-item:hover {
-    background-color: #212121 !important;
+    background-color: var(--sidebar-item-hover) !important;
 }
 
-/* Boost active z-index so dropdown layers on top of subsequent titles */
 .history-item.active-menu {
     z-index: 99 !important;
-    background-color: #212121 !important;
+    background-color: var(--sidebar-item-hover) !important;
 }
 
-/* Truncation and layout shifts exclusively here now */
 .history-text {
     flex: 1;
-    padding: 9px 40px 9px 12px; /* Right padding preserves interactive space for 3 dots */
+    padding: 9px 40px 9px 12px; 
     cursor: pointer;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; 
     display: block;
+    color: var(--text) !important;
 }
 
-/* Custom Webkit History Scrollbar styling */
+/* Scrollbar styling */
 .history::-webkit-scrollbar {
     width: 6px;
 }
@@ -173,12 +184,12 @@
 }
 
 .history::-webkit-scrollbar-thumb {
-    background: #2d2d2d; 
+    background: var(--border-color); 
     border-radius: 10px;
 }
 
 .history::-webkit-scrollbar-thumb:hover {
-    background: #424242; 
+    background: var(--text); 
 }
 
 /* User Profile Card Footer */
@@ -187,8 +198,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 12px 4px 4px 4px;
-    border-top: 1px solid #2d2d2d !important; 
+    border-top: 1px solid var(--border-color) !important; 
     margin-top: 8px;
+    transition: border-color 0.3s ease;
 }
 
 .profile-card {
@@ -196,12 +208,14 @@
     align-items: center;
     gap: 10px;
     text-align: left !important;
+    max-width: 150px;
+    overflow: hidden;
 }
 
 .avatar {
     width: 32px;
     height: 32px;
-    background-color: #40414f !important; 
+    background-color: var(--accent) !important; 
     color: #fff !important;
     border-radius: 50%;
     display: flex;
@@ -209,139 +223,156 @@
     justify-content: center;
     font-size: 12px !important;
     font-weight: 600 !important;
+    flex-shrink: 0;
 }
 
 .profile-info {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .username {
     font-family: 'Roboto', sans-serif !important;
     font-size: 14px !important;
     font-weight: 500 !important;
-    color: #fff !important;
+    color: var(--text-h) !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tier {
     font-size: 12px !important;
-    color: #8e8e8e !important;
+    color: var(--sidebar-subtext) !important;
 }
 
-.upgrade-btn {
-    background-color: transparent !important;
-    border: 1px solid #4d4d4d !important;
-    padding: 6px 12px;
-    border-radius: 16px;
-    font-size: 12px !important;
-    font-weight: 500 !important;
-    color: #fff !important;
+.footer-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-icon-btn {
+    background: none !important;
+    border: none !important;
+    color: var(--text) !important;
+    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.15s ease;
+    padding: 6px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.upgrade-btn:hover {
-    background-color: #212121 !important;
+.footer-icon-btn:hover {
+    background-color: var(--sidebar-item-hover) !important;
+    color: var(--text-h) !important;
 }
 
-/* 3-Dot Container positioning layout */
+.logout-btn:hover {
+    color: #ef4444 !important;
+}
+
+/* 3-Dot Container */
 .thread-menu-container {
     position: absolute;
     right: 8px;
     display: flex;
     align-items: center;
-    z-index: 5;
 }
 
-/* Hide the 3-dot button by default */
 .thread-menu-btn {
-    opacity: 0;
-    visibility: hidden;
-    background: none;
-    border: none;
-    color: #8e8e8e;
+    background: none !important;
+    border: none !important;
+    color: var(--sidebar-subtext) !important;
     cursor: pointer;
-    width: 26px;
-    height: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    font-size: 14px;
-    transition: opacity 0.2s ease, visibility 0.2s ease, background-color 0.15s ease, color 0.15s ease;
+    padding: 4px;
+    opacity: 0;
+    transition: opacity 0.2s ease, color 0.2s ease;
 }
 
-.thread-menu-btn:hover {
-    background-color: #2d2d2d;
-    color: #fff;
-}
-
-/* Reveal button when row is hovered or dropdown is open */
 .history-item:hover .thread-menu-btn,
 .history-item.active-menu .thread-menu-btn {
     opacity: 1;
-    visibility: visible;
 }
 
-/* Fixed Overlay Dropdown styling */
+.thread-menu-btn:hover {
+    color: var(--text-h) !important;
+}
+
+/* Dropdown UI */
 .thread-dropdown {
     position: absolute;
+    top: 24px;
     right: 0;
-    top: calc(100% + 4px); 
-    background-color: #202123; 
-    border: 1px solid #3c3c3c;
-    border-radius: 6px;
-    z-index: 9999 !important; 
+    background-color: var(--navbar-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 4px;
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
-    min-width: 125px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-    overflow: hidden;
+    z-index: 100;
+    min-width: 110px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Individual dropdown buttons */
 .dropdown-item {
-    background: none;
-    border: none;
-    color: #ececf1;
-    padding: 8px 14px;
-    text-align: left;
-    font-size: 13px;
+    background: none !important;
+    border: none !important;
+    padding: 8px 12px;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: var(--text) !important;
     cursor: pointer;
+    text-align: left !important;
+    border-radius: 4px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     width: 100%;
 }
 
 .dropdown-item:hover {
-    background-color: #2d2d2d;
+    background-color: var(--sidebar-item-hover) !important;
+    color: var(--text-h) !important;
+}
+
+.dropdown-item.delete-btn {
+    color: #ef4444 !important;
 }
 
 .dropdown-item.delete-btn:hover {
-    background-color: #b91c1c;
-    color: white;
+    background-color: rgba(239, 68, 68, 0.08) !important;
 }
 
-/* Ensure the logo has a smooth basis and pointer cursor */
-.logo {
-    cursor: pointer;
-    display: inline-block; /* Required for transform modifications to work properly */
-    transition: transform 0.1s ease;
+/* Logo rotation animation keyframes */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
-/* The animation class applied via React state */
-.logo.spin-once {
-    /* 1s duration, ease-in-out provides the slow-fast-slow acceleration curve */
-    animation: spinCircle 1s ease-in-out; 
+.spin-once {
+    animation: spin 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Keyframe definition for a single 360-degree rotation */
-@keyframes spinCircle {
-    0% {
-        transform: rotate(0deg);
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        left: -260px; /* Slide out of view */
+        top: 0;
+        z-index: 1000;
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+        transition: left 0.3s ease;
     }
-    100% {
-        transform: rotate(360deg);
+    
+    .close-btn {
+        display: block; /* Show close button on mobile */
+    }
+
+    /* Target overlay open style */
+    .sidebar-mobile-open .sidebar {
+        left: 0; /* Slide into view */
     }
 }

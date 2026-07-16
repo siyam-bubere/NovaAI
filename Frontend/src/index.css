@@ -1,23 +1,30 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
+  --text: #4a4a4a;
+  --text-h: #111111;
+  --bg: #f7f7f8;
+  --app-bg: #f4f4f6;
+  --chat-bg: #ffffff;
+  --sidebar-bg: #f0f0f4;
+  --sidebar-item-hover: #e4e4e7;
+  --sidebar-text: #18181b;
+  --sidebar-subtext: #71717a;
+  --navbar-bg: #ffffff;
+  --input-bg: #f4f4f5;
+  --input-text: #09090b;
+  --border-color: #e4e4e7;
   --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --accent-hover: #8c22dc;
+  --msg-user-bg: #f4f4f5;
+  --msg-bot-bg: transparent;
+  --button-border: #d4d4d8;
+  --shadow: rgba(0, 0, 0, 0.05) 0 4px 6px -1px, rgba(0, 0, 0, 0.02) 0 2px 4px -1px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --sans: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --heading: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
-  color-scheme: light dark;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -30,24 +37,26 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+:root[data-theme="dark"] {
+  --text: #ececec;
+  --text-h: #ffffff;
+  --bg: #212121;
+  --app-bg: #212121;
+  --chat-bg: #212121;
+  --sidebar-bg: #171717;
+  --sidebar-item-hover: #212121;
+  --sidebar-text: #ececec;
+  --sidebar-subtext: #8e8e8e;
+  --navbar-bg: #212121;
+  --input-bg: #2f2f2f;
+  --input-text: #ffffff;
+  --border-color: #2d2d2d;
+  --accent: #c084fc;
+  --accent-hover: #aa3bff;
+  --msg-user-bg: #2f2f2f;
+  --msg-bot-bg: transparent;
+  --button-border: #4d4d4d;
+  --shadow: rgba(0, 0, 0, 0.3) 0 10px 15px -3px, rgba(0, 0, 0, 0.2) 0 4px 6px -2px;
 }
 
 body {
@@ -108,4 +117,8 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+.brand-geist-pixel {
+  font-family: 'Geist Pixel', monospace !important;
 }

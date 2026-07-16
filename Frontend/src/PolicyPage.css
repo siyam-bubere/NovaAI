@@ -1,0 +1,201 @@
+.policy-page-container {
+    height: 100vh;
+    overflow-y: auto;
+    background-color: var(--app-bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Header */
+.policy-header {
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--navbar-bg);
+    z-index: 10;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.policy-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.policy-logo {
+    height: 32px;
+    width: 32px;
+    object-fit: cover;
+}
+
+.policy-brand-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-h);
+    letter-spacing: 1px;
+}
+
+.policy-back-btn {
+    background-color: transparent;
+    color: var(--text-h);
+    border: 1px solid var(--button-border);
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.policy-back-btn:hover {
+    background-color: var(--sidebar-item-hover);
+    border-color: var(--text-h);
+}
+
+/* Main content area */
+.policy-main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Tabs */
+.policy-tabs {
+    display: flex;
+    background-color: var(--input-bg);
+    border-radius: 30px;
+    padding: 4px;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.policy-tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    border-radius: 26px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.policy-tab-btn.active {
+    background-color: var(--chat-bg);
+    color: var(--text-h);
+    box-shadow: var(--shadow);
+}
+
+/* Document Card */
+.policy-card {
+    background-color: var(--chat-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: left;
+    width: 100%;
+    box-shadow: var(--shadow);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.policy-content h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-h);
+    margin-bottom: 8px;
+}
+
+.last-updated {
+    font-size: 14px;
+    color: var(--sidebar-subtext);
+    margin-bottom: 32px;
+}
+
+.policy-content section {
+    margin-bottom: 28px;
+}
+
+.policy-content h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-h);
+    margin-bottom: 12px;
+}
+
+.policy-content p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 12px;
+}
+
+.policy-content ul {
+    margin-left: 24px;
+    margin-bottom: 16px;
+}
+
+.policy-content li {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+/* Footer */
+.policy-footer {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    font-size: 14px;
+    color: var(--sidebar-subtext);
+    padding: 0 20px;
+    text-align: center;
+    transition: border-color 0.3s ease;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .policy-header {
+        padding: 0 16px;
+    }
+
+    .policy-brand-name {
+        font-size: 20px;
+    }
+
+    .policy-main {
+        padding: 24px 12px;
+    }
+
+    .policy-card {
+        padding: 24px 16px;
+    }
+
+    .policy-content h1 {
+        font-size: 24px;
+    }
+
+    .policy-content h2 {
+        font-size: 18px;
+    }
+}
