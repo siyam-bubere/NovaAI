@@ -2,6 +2,7 @@ import "./Sidebar.css";
 import { useContext, useEffect, useState } from 'react'; 
 import { MyContext } from "./MyContext";
 import { v1 as uuidv1 } from 'uuid';
+import logow from "./assets/logow.png";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
 
@@ -113,7 +114,7 @@ function Sidebar() {
                 <div className="brand-header">
                     <div className="logo-brand-wrap" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <img 
-                            src="src/assets/logow.png" 
+                            src={logow} 
                             alt="NovaAI Logo" 
                             className={`logo ${isSpinning ? 'spin-once' : ''}`} 
                             onMouseEnter={() => {

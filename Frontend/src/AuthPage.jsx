@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./AuthPage.css";
+import logow from "./assets/logow.png";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
 
@@ -191,7 +192,7 @@ function AuthPage({ onNavigate, initialTab, onAuthSuccess }) {
             </div>
 
             <div className="auth-header-logo" onClick={() => onNavigate("landing")}>
-                <img src="src/assets/logow.png" alt="NovaAI Logo" className="auth-logo" />
+                <img src={logow} alt="NovaAI Logo" className="auth-logo" />
                 <span className="brand-geist-pixel auth-brand-name">Nova AI</span>
             </div>
 

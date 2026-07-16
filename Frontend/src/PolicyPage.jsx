@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./PolicyPage.css";
+import logow from "./assets/logow.png";
 
 function PolicyPage({ onNavigate, initialTab }) {
     const [activeTab, setActiveTab] = useState(initialTab || "terms");
@@ -8,7 +9,7 @@ function PolicyPage({ onNavigate, initialTab }) {
         <div className="policy-page-container">
             <header className="policy-header">
                 <div className="policy-logo-container" onClick={() => onNavigate("landing")}>
-                    <img src="src/assets/logow.png" alt="NovaAI Logo" className="policy-logo" />
+                    <img src={logow} alt="NovaAI Logo" className="policy-logo" />
                     <span className="brand-geist-pixel policy-brand-name">Nova AI</span>
                 </div>
                 <button className="policy-back-btn" onClick={() => onNavigate("landing")}>

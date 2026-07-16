@@ -1,12 +1,13 @@
 import React from "react";
 import "./LandingPage.css";
+import logow from "./assets/logow.png";
 
 function LandingPage({ onNavigate, theme, onToggleTheme }) {
     return (
         <div className="landing-container">
             <header className="landing-header">
                 <div className="landing-logo-container">
-                    <img src="src/assets/logow.png" alt="NovaAI Logo" className="landing-logo" />
+                    <img src={logow} alt="NovaAI Logo" className="landing-logo" />
                     <span className="brand-geist-pixel landing-brand-name">Nova AI</span>
                 </div>
                 <div className="landing-header-actions">
@@ -73,7 +74,7 @@ function LandingPage({ onNavigate, theme, onToggleTheme }) {
                 <div className="footer-top-grid">
                     <div className="footer-brand-col">
                         <div className="footer-logo-wrap">
-                            <img src="src/assets/logow.png" alt="NovaAI Logo" className="footer-logo" />
+                            <img src={logow} alt="NovaAI Logo" className="footer-logo" />
                             <span className="brand-geist-pixel footer-brand-name">Nova AI</span>
                         </div>
                         <p className="footer-tagline">
