@@ -2,9 +2,11 @@ import nodemailer from "nodemailer";
 
 const sendVerificationEmail = async (email, code) => {
     try {
+        const smtpPort = parseInt(process.env.SMTP_PORT || "587");
         const transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST || "smtp.ethereal.email",
-            port: parseInt(process.env.SMTP_PORT || "587"),
+            port: smtpPort,
+            secure: smtpPort === 465, // true for 465, false for 587
             auth: {
                 user: process.env.SMTP_USER || null,
                 pass: process.env.SMTP_PASS || null
