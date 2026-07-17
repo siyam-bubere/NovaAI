@@ -1,7 +1,7 @@
-/* Base Viewport Container */
 .chatWindow {
     flex-grow: 1;
     height: 100vh;
+    height: 100dvh;
     background-color: var(--chat-bg);
     color: var(--text);
     display: flex;

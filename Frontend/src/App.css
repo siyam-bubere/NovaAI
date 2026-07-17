@@ -1,6 +1,7 @@
 #root {
   width: 100vw !important;
   height: 100vh !important;
+  height: 100dvh !important;
   margin: 0 !important;
   padding: 0 !important;
   display: block !important;
@@ -30,6 +31,7 @@ body {
   align-items: stretch !important;
   width: 100vw !important;
   height: 100vh !important;
+  height: 100dvh !important;
   margin: 0 !important;
   padding: 0 !important;
   overflow: hidden !important;
@@ -43,6 +45,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(2px);
   z-index: 999;
