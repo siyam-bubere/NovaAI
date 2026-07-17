@@ -375,4 +375,26 @@
     .sidebar-mobile-open .sidebar {
         left: 0; /* Slide into view */
     }
+
+    /* Make profile card, name, theme toggle, and logout button mobile responsive */
+    .sidebar-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 16px 8px;
+    }
+
+    .profile-card {
+        max-width: 100%;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .footer-actions {
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 4px;
+        border-top: 1px dashed var(--border-color);
+        padding-top: 12px;
+    }
 }
