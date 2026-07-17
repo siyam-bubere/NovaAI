@@ -12,10 +12,36 @@ function ChatWindow() {
         setReply, currThreadId, 
         setNewChat, setPrevChats, 
         isTyping, token, 
-        user, setMobileSidebarOpen 
+        user, setMobileSidebarOpen,
+        logout
     } = useContext(MyContext);
     
     const [loading, setLoading] = useState(false);
+    const [showProfileModal, setShowProfileModal] = useState(false);
+    const [showDeleteUserConfirm, setShowDeleteUserConfirm] = useState(false);
+
+    const handleDeleteAccount = async () => {
+        try {
+            const response = await fetch(`${BACKEND_URL}/api/auth/delete-account`, {
+                method: "DELETE",
+                headers: { 
+                    "Authorization": `Bearer ${token}` 
+                }
+            });
+
+            if (response.ok) {
+                setShowDeleteUserConfirm(false);
+                setShowProfileModal(false);
+                logout();
+            } else {
+                const data = await response.json();
+                alert(data.error || "Failed to delete account.");
+            }
+        } catch (err) {
+            console.error("Delete account error:", err);
+            alert("Connection error. Could not delete account.");
+        }
+    };
 
     const getREply = async () => {
         const userMessageContent = prompt.trim();
@@ -77,7 +103,7 @@ function ChatWindow() {
                     </button>
                     <span className="brand-geist-pixel">Nova AI</span>
                 </div>
-                <div className="userIconDiv" title={user?.name || "User"}>
+                <div className="userIconDiv" title={user?.name || "User"} onClick={() => setShowProfileModal(true)}>
                     <span>{getInitials()}</span>
                 </div>
             </div>
@@ -111,6 +137,59 @@ function ChatWindow() {
                 </div>
                 <p className="info">NovaAI can make mistakes. Check important info.</p>
             </div>
+
+            {/* User Profile Details Modal */}
+            {showProfileModal && (
+                <div className="profile-modal-overlay" onClick={() => setShowProfileModal(false)}>
+                    <div className="profile-modal" onClick={(e) => e.stopPropagation()}>
+                        <div className="profile-modal-header">
+                            <h3>User Profile</h3>
+                            <button className="close-profile-btn" onClick={() => setShowProfileModal(false)}>
+                                <i className="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <div className="profile-modal-body">
+                            <div className="profile-avatar-large">
+                                {getInitials()}
+                            </div>
+                            <div className="profile-details-list">
+                                <div className="profile-detail-row">
+                                    <span className="label">Name</span>
+                                    <span className="value">{user?.name || "User"}</span>
+                                </div>
+                                <div className="profile-detail-row">
+                                    <span className="label">Email</span>
+                                    <span className="value">{user?.email || "N/A"}</span>
+                                </div>
+                                <div className="profile-detail-row">
+                                    <span className="label">Account Status</span>
+                                    <span className="value badge" style={{ backgroundColor: user?.isUnlimited ? "var(--accent)" : "#4b5563" }}>
+                                        {user?.isUnlimited ? "Unlimited" : "Free"}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <button className="delete-account-trigger-btn" onClick={() => setShowDeleteUserConfirm(true)}>
+                                <i className="fa-solid fa-trash-can"></i> Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Account Delete Confirmation Modal */}
+            {showDeleteUserConfirm && (
+                <div className="profile-modal-overlay alert-overlay" onClick={() => setShowDeleteUserConfirm(false)}>
+                    <div className="profile-modal delete-confirm-modal" onClick={(e) => e.stopPropagation()}>
+                        <h3>Warning: Delete Account?</h3>
+                        <p>This action is <strong>irreversible</strong>. All your data, profile configuration, and chat conversations will be deleted forever.</p>
+                        <div className="profile-modal-actions">
+                            <button className="profile-modal-btn cancel" onClick={() => setShowDeleteUserConfirm(false)}>Cancel</button>
+                            <button className="profile-modal-btn confirm delete" onClick={handleDeleteAccount}>Delete Permanently</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

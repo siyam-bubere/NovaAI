@@ -2,7 +2,9 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import Thread from "../models/Thread.js";
 import sendVerificationEmail from "../utils/sendEmail.js";
+import authMiddleware from "../utils/authMiddleware.js";
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || "novaai_secret_key_12345";
@@ -238,6 +240,24 @@ router.post("/resend-code", async (req, res) => {
     } catch (err) {
         console.error("Resend OTP Error:", err);
         return res.status(500).json({ error: "Internal server error." });
+    }
+});
+
+// Delete Account Route
+router.delete("/delete-account", authMiddleware, async (req, res) => {
+    try {
+        const userId = req.user._id;
+
+        // Delete all chat threads associated with the user
+        await Thread.deleteMany({ userId });
+
+        // Delete the user
+        await User.findByIdAndDelete(userId);
+
+        return res.status(200).json({ success: "Account and associated data deleted successfully." });
+    } catch (err) {
+        console.error("Delete Account Error:", err);
+        return res.status(500).json({ error: "Internal server error during account deletion." });
     }
 });
 

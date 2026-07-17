@@ -239,3 +239,188 @@
         height: 32px;
     }
 }
+
+/* User Profile Modal overlays */
+.profile-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.profile-modal {
+    background-color: var(--navbar-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: var(--shadow);
+    text-align: left;
+    box-sizing: border-box;
+    animation: scaleIn 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.profile-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 12px;
+}
+
+.profile-modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-h);
+}
+
+.close-profile-btn {
+    background: none !important;
+    border: none !important;
+    font-size: 18px;
+    color: var(--sidebar-subtext) !important;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.2s ease;
+}
+
+.close-profile-btn:hover {
+    color: var(--text-h) !important;
+}
+
+.profile-avatar-large {
+    width: 64px;
+    height: 64px;
+    background-color: var(--accent);
+    color: #fff;
+    font-size: 24px;
+    font-weight: 600;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+}
+
+.profile-details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.profile-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.profile-detail-row .label {
+    color: var(--sidebar-subtext);
+    font-weight: 500;
+}
+
+.profile-detail-row .value {
+    color: var(--text-h);
+    font-weight: 600;
+}
+
+.profile-detail-row .value.badge {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 12px;
+}
+
+.delete-account-trigger-btn {
+    width: 100%;
+    background-color: rgba(239, 68, 68, 0.08) !important;
+    color: #ef4444 !important;
+    border: 1px solid rgba(239, 68, 68, 0.2) !important;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.delete-account-trigger-btn:hover {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+    border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Delete confirmation modal layout overrides */
+.delete-confirm-modal {
+    border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+.delete-confirm-modal h3 {
+    color: #ef4444 !important;
+}
+
+.delete-confirm-modal p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--sidebar-subtext);
+    margin-bottom: 24px;
+}
+
+.profile-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.profile-modal-btn {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.profile-modal-btn.cancel {
+    background-color: transparent;
+    color: var(--sidebar-subtext);
+    border: 1px solid var(--border-color);
+}
+
+.profile-modal-btn.cancel:hover {
+    background-color: var(--sidebar-item-hover);
+    color: var(--text-h);
+}
+
+.profile-modal-btn.confirm.delete {
+    background-color: #ef4444;
+    color: #fff;
+}
+
+.profile-modal-btn.confirm.delete:hover {
+    opacity: 0.9;
+}
