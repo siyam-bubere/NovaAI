@@ -20,6 +20,8 @@
     background-color: var(--navbar-bg);
     border-bottom: 1px solid var(--border-color);
     box-sizing: border-box;
+    position: relative;
+    z-index: 10;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -65,18 +67,20 @@
 
 /* Right Side User Profile circle */
 .userIconDiv {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background-color: var(--accent);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     color: #fff;
     transition: transform 0.2s ease;
+    touch-action: manipulation; /* Optimizes touch feedback */
+    user-select: none;
 }
 
 .userIconDiv:hover {
