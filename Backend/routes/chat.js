@@ -50,6 +50,33 @@ router.delete("/thread/:threadId", authMiddleware, async (req, res) => {
     }
 });
 
+router.put("/thread/:threadId", authMiddleware, async (req, res) => {
+    const {threadId} = req.params;
+    const {title} = req.body;
+
+    if (!title || !title.trim()) {
+        return res.status(400).json({error: "Title is required."});
+    }
+
+    try {
+        const thread = await Thread.findOneAndUpdate(
+            { threadId, userId: req.user._id },
+            { title: title.trim() },
+            { new: true }
+        );
+
+        if(!thread) {
+            return res.status(404).json({error: "Thread not found."});
+        }
+
+        res.status(200).json({success: "Thread renamed successfully.", thread});
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({error: "Failed to rename thread."});
+    }
+});
+
 router.post("/chat", authMiddleware, async (req, res) => {
     const {threadId, message} = req.body;
 

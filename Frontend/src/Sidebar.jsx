@@ -21,6 +21,45 @@ function Sidebar() {
     const [openMenuId, setOpenMenuId] = useState(null);
     const [isSpinning, setIsSpinning] = useState(false);
     
+    // Modal states
+    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+    const [deletingThreadId, setDeletingThreadId] = useState(null);
+    const [renamingThreadId, setRenamingThreadId] = useState(null);
+    const [renamingTitle, setRenamingTitle] = useState("");
+
+    const renameThread = async () => {
+        if (!renamingThreadId || !renamingTitle.trim()) return;
+
+        try {
+            const response = await fetch(`${BACKEND_URL}/api/thread/${renamingThreadId}`, {
+                method: "PUT",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}` 
+                },
+                body: JSON.stringify({ title: renamingTitle.trim() })
+            });
+
+            if (response.ok) {
+                setAllThreads(prev => prev.map(thread => 
+                    thread.threadId === renamingThreadId 
+                        ? { ...thread, title: renamingTitle.trim() } 
+                        : thread
+                ));
+                if (renamingThreadId === currThreadId) {
+                    setPrevChats(prev => [...prev]);
+                }
+            } else {
+                console.error("Rename failed");
+            }
+        } catch(err) {
+            console.error("Error renaming thread:", err);
+        } finally {
+            setRenamingThreadId(null);
+            setRenamingTitle("");
+        }
+    };
+    
     const getAllThreads = async () => {
         if (!token) return;
         try {
@@ -179,7 +218,8 @@ function Sidebar() {
                                                 className="dropdown-item"
                                                 onClick={() => {
                                                     setOpenMenuId(null);
-                                                    // Optional: Rename logic
+                                                    setRenamingThreadId(thread.threadId);
+                                                    setRenamingTitle(thread.title);
                                                 }}
                                             >
                                                 <i className="fa-solid fa-pen"></i> Rename
@@ -188,7 +228,7 @@ function Sidebar() {
                                                 className="dropdown-item delete-btn"
                                                 onClick={() => {
                                                     setOpenMenuId(null);
-                                                    deleteThread(thread.threadId);
+                                                    setDeletingThreadId(thread.threadId);
                                                 }}
                                             >
                                                 <i className="fa-solid fa-trash"></i> Delete
@@ -222,13 +262,78 @@ function Sidebar() {
                     </button>
                     <button 
                         className="footer-icon-btn logout-btn" 
-                        onClick={logout} 
+                        onClick={() => setShowLogoutConfirm(true)} 
                         title="Log Out"
                     >
                         <i className="fa-solid fa-right-from-bracket"></i>
                     </button>
                 </div>
             </div>
+
+            {/* Logout Confirmation Modal */}
+            {showLogoutConfirm && (
+                <div className="sidebar-modal-overlay">
+                    <div className="sidebar-modal">
+                        <h3>Confirm Sign Out</h3>
+                        <p>Are you sure you want to log out of your session?</p>
+                        <div className="modal-actions">
+                            <button className="modal-btn cancel" onClick={() => setShowLogoutConfirm(false)}>Cancel</button>
+                            <button className="modal-btn confirm logout" onClick={() => {
+                                setShowLogoutConfirm(false);
+                                logout();
+                            }}>Log Out</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Delete Confirmation Modal */}
+            {deletingThreadId && (
+                <div className="sidebar-modal-overlay">
+                    <div className="sidebar-modal">
+                        <h3>Delete Chat?</h3>
+                        <p>This will permanently delete this conversation and all its messages. This cannot be undone.</p>
+                        <div className="modal-actions">
+                            <button className="modal-btn cancel" onClick={() => setDeletingThreadId(null)}>Cancel</button>
+                            <button className="modal-btn confirm delete" onClick={() => {
+                                deleteThread(deletingThreadId);
+                                setDeletingThreadId(null);
+                            }}>Delete</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Rename Input Modal */}
+            {renamingThreadId && (
+                <div className="sidebar-modal-overlay">
+                    <div className="sidebar-modal">
+                        <h3>Rename Chat</h3>
+                        <input 
+                            type="text" 
+                            className="modal-input" 
+                            value={renamingTitle}
+                            onChange={(e) => setRenamingTitle(e.target.value)}
+                            placeholder="Enter chat title..."
+                            autoFocus
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") renameThread();
+                                if (e.key === "Escape") {
+                                    setRenamingThreadId(null);
+                                    setRenamingTitle("");
+                                }
+                            }}
+                        />
+                        <div className="modal-actions">
+                            <button className="modal-btn cancel" onClick={() => {
+                                setRenamingThreadId(null);
+                                setRenamingTitle("");
+                            }}>Cancel</button>
+                            <button className="modal-btn confirm rename" onClick={renameThread}>Save</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </section>
     );
 }
